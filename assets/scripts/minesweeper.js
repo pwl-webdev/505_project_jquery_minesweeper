@@ -3,16 +3,46 @@ $(document).ready(function(){
 	var board = createBoard();
 	render(board);
 	setMines(board);
-	//renderChanges(board);
 	setDistances(board);
-	//renderChanges(board);
-	start(board);
+	//start(board);
+
+	$('.banner').click(function(event){
+		if(time == 0){
+			start(board);
+		} else {
+			reset(board);
+		}
+	});
 });
 
 var size = 9;
 var flagsToUse = 10;
+var animation;
+var timeStep = 1000;
+var time = 0;
 
+var reset = function(board){
+	board = createBoard();
+	render(board);
+	setMines(board);
+	setDistances(board);
+	flagsToUse = 10;
+	time = 0;
+	start(board);
+}
+
+var startTime = function(){
+			animation = window.setInterval(function(){
+			$('.banner').text("Time: "+time);
+			time += 1;
+		}, timeStep);
+}
+var stopTime = function(){
+	window.clearInterval(animation);
+	$('.banner').text('Click to start');
+}
 var start = function(board){
+	startTime();
 	$('.game').bind('contextmenu', function(){ return false });
 	$('.cell').mousedown(function(event){
 		event.preventDefault();
@@ -45,6 +75,7 @@ var checkVictory = function(board){
  	end = false;
  }
  if(end){
+ 	stopTime();
  	alert("You Won!");
  }
 }
@@ -79,6 +110,7 @@ var makeMove = function(board, row, column){
 		board[row][column] = "C";
 	} else if (board[row][column] == "X" && $(`#r${row}c${column}`).html() != "F"){
 		uncoverMines(board);
+		stopTime();
 		alert("You lost!");
 	}
 
