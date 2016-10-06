@@ -53,5 +53,35 @@ table {
 body, html{
 	width: 100%;
 	height: 100%;
+}
+header{
+	height: 150px;
+	width: 100%;
+	position: relative;
+	background-color: yellow;
+}
+.container{
+	width: 270px;
+	margin: 0 auto;
+	position: relative;
 	background-color: grey;
+}
+.scoreboard{
+	height: 100px;
+	width: 100%;
+}
+.game{
+	position: relative;
+	width: 270px;
+	height: 270px;
+	/*background-color: orange;*/
+}
+.cell{
+	float: left;
+	width: 30px;
+	height: 30px;
+	box-sizing: border-box;
+	border: 1px solid black;
+	border-radius: 2px;
+	background-color: rgb(150, 230, 150);
 }
