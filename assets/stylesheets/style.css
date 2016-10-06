@@ -89,11 +89,15 @@ header{
 	vertical-align: middle;
 }
 .mine{
-	color: red;
+	color: rgba(255,0,0,0);
+	background-image: url(../images/mine.png);
+	background-size: 30px 30px;
 }
 .cell_opened{
 	background-color: rgb(200, 255, 200);
 }
 .flagged{
-	color: blue;
+	color: rgba(0,0,255,0);
+	background-image: url(../images/flag.png);
+	background-size: 30px 30px;
 }
