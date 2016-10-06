@@ -94,3 +94,6 @@ header{
 .cell_opened{
 	background-color: rgb(200, 255, 200);
 }
+.flagged{
+	color: blue;
+}

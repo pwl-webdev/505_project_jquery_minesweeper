@@ -10,15 +10,58 @@ $(document).ready(function(){
 });
 
 var size = 9;
+var flagsToUse = 10;
 
 var start = function(board){
-	$('.cell').click(function(event){
+	$('.game').bind('contextmenu', function(){ return false });
+	$('.cell').mousedown(function(event){
+		event.preventDefault();
 		console.log(event);
 		var pos = event.target.id.split("");
 		var column = pos[3];
 		var row = pos[1];
-		makeMove(board, row, column);
+		switch(event.which){
+			case 1:
+				makeMove(board, row, column);
+			break;
+			case 3:
+				flagField(board, row, column);
+			break;
+		}
+		checkVictory(board);
 	});
+}
+
+var checkVictory = function(board){
+ var end = true;
+ if(flagsToUse == 0){
+	for(var i = 0; i < size; i++){
+		for(var j = 0; j < size; j++){
+			if(board[i][j] != "X" && board[i][j] != "C")
+				end = false;
+		}
+	}
+ } else{
+ 	end = false;
+ }
+ if(end){
+ 	alert("You Won!");
+ }
+}
+
+var flagField = function(board, row, column){
+	//console.log("right clicked row "+row+" column "+column);
+	row = Number(row);
+	column = Number(column);
+	if(board[row][column] != "C" && $(`#r${row}c${column}`).html() != "F" && flagsToUse > 0){
+		$(`#r${row}c${column}`).html("F");
+		flagsToUse -= 1;
+		$(`#r${row}c${column}`).addClass('flagged');
+	} else if (board[row][column] != "C" && $(`#r${row}c${column}`).html() == "F"){
+		$(`#r${row}c${column}`).html(" ");
+		flagsToUse += 1;
+		$(`#r${row}c${column}`).removeClass('flagged');
+	}
 }
 
 var makeMove = function(board, row, column){
@@ -27,14 +70,14 @@ var makeMove = function(board, row, column){
 	//var row = pos[1];
 	row = Number(row);
 	column = Number(column);
-	if(board[row][column] == " "){
+	if(board[row][column] == " " && $(`#r${row}c${column}`).html() != "F"){
 		uncoverBlanks(board, row, column);
 		//renderChange(board, row, column);
 		//board[row][column] = "C";
-	} else if(board[row][column] != "X" && board[row][column] != "C"){
+	} else if(board[row][column] != "X" && board[row][column] != "C" && $(`#r${row}c${column}`).html() != "F"){
 		renderChange(board, row, column);
 		board[row][column] = "C";
-	} else if (board[row][column] == "X"){
+	} else if (board[row][column] == "X" && $(`#r${row}c${column}`).html() != "F"){
 		uncoverMines(board);
 		alert("You lost!");
 	}
@@ -121,7 +164,7 @@ var renderChanges = function(board){
 }
 
 var renderChange = function(board, row, col){
-	if(board[row][col] != "C"){
+	if(board[row][col] != "C" && $(`#r${row}c${col}`).html() != "F"){
 		$(`#r${row}c${col}`).html(board[row][col]);
 		if(board[row][col] == "X")
 			$(`#r${row}c${col}`).addClass('mine');
