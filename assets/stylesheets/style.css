@@ -84,4 +84,13 @@ header{
 	border: 1px solid black;
 	border-radius: 2px;
 	background-color: rgb(150, 230, 150);
+	line-height: 30px;
+	text-align: center;
+	vertical-align: middle;
+}
+.mine{
+	color: red;
+}
+.cell_opened{
+	background-color: rgb(200, 255, 200);
 }
